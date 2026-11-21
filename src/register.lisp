@@ -14,7 +14,10 @@ inspected further. Always NIL off Linux."
   (declare (ignorable fs directory))
   (cond ((not (%linux-p)) nil)
         ((and fs (not (typep fs 'pathlib:local-filesystem))) nil)
-        (t (%r4b1-pending 'inotify-available-p))))
+        (t (let ((fd (%inotify-init1 (logior +in-nonblock+ +in-cloexec+))))
+             (when (>= fd 0)
+               (%close fd)
+               t)))))
 
 (pathlib:register-watch-mechanism :inotify '%make-inotify-journal
                                   :rank +inotify-rank+
