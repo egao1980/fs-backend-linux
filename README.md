@@ -40,7 +40,7 @@ volume on the ubuntu-latest host. Locally, in Docker:
 docker run --rm --privileged -v "$PWD":/src:ro ghcr.io/egao1980/cl-repository/ci-base:latest bash -c '
   apt-get update -q && apt-get install -y -q btrfs-progs xfsprogs
   truncate -s 1G /b.img /x.img && mkfs.btrfs -q /b.img && mkfs.xfs -q -m reflink=1 /x.img
-  mkdir -p /mnt/btrfs /mnt/xfs && mount -o loop /b.img /mnt/btrfs && mount -o loop /x.img /mnt/xfs
+  mkdir -p /mnt/btrfs /mnt/xfs && mount -o loop,max_inline=0 /b.img /mnt/btrfs && mount -o loop /x.img /mnt/xfs
   cp -a /src /w && cd /w && FS_BACKEND_LINUX_REFLINK_DIRS=/mnt/btrfs:/mnt/xfs FS_BACKEND_LINUX_REQUIRE_REFLINK=1 cl-repo test --system fs-backend-linux'
 ```
 

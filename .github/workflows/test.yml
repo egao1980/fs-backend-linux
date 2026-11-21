@@ -45,9 +45,12 @@ jobs:
           done
           mkfs.btrfs -q "$RUNNER_TEMP/btrfs.img"
           mkfs.xfs -q -m reflink=1 "$RUNNER_TEMP/xfs.img"
+          # max_inline=0: btrfs otherwise stores files <= 2 KiB inline in metadata,
+          # and FIEMAP reports DATA_INLINE instead of SHARED for their clones.
+          sudo mkdir -p /mnt/btrfs /mnt/xfs
+          sudo mount -o loop,max_inline=0 "$RUNNER_TEMP/btrfs.img" /mnt/btrfs
+          sudo mount -o loop "$RUNNER_TEMP/xfs.img" /mnt/xfs
           for fs in btrfs xfs; do
-            sudo mkdir -p "/mnt/$fs"
-            sudo mount -o loop "$RUNNER_TEMP/$fs.img" "/mnt/$fs"
             sudo chown "$(id -u):$(id -g)" "/mnt/$fs"
           done
           findmnt -T /mnt/btrfs
