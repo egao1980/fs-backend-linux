@@ -24,4 +24,12 @@
    #:+in-create+ #:+in-delete+ #:+in-delete-self+ #:+in-move-self+
    #:+in-unmount+ #:+in-q-overflow+ #:+in-ignored+
    #:+in-onlydir+ #:+in-dont-follow+ #:+in-excl-unlink+ #:+in-mask-add+
-   #:+in-isdir+ #:+in-oneshot+))
+   #:+in-isdir+ #:+in-oneshot+
+   ;; R4c-2: FICLONE reflink clones (registered as :FICLONE)
+   #:+ficlone-rank+
+   #:ficlone-available-p
+   #:ficlone-file
+   #:file-extents-shared-p          ; for tests
+   #:ficlone-error
+   ;; ioctl numbers and the FIEMAP extent flag (generic Linux ABI)
+   #:+ficlone+ #:+fs-ioc-fiemap+ #:+fiemap-extent-shared+))
