@@ -88,6 +88,7 @@ drain handles it before the events it reads from the kernel, exactly as if
 the kernel had queued it. MASK is the event's mask (e.g. +IN-Q-OVERFLOW+,
 which the kernel sends with wd -1); WD is a watch descriptor or :ROOT (the
 root's watch); NAME a string or NIL. Returns JOURNAL."
+  (declare (ignorable wd))
   (check-type journal inotify-journal)
   (check-type mask (unsigned-byte 32))
   (check-type cookie (unsigned-byte 32))

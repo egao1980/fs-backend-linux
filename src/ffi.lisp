@@ -71,6 +71,7 @@ answer COMPLETE-P NIL instead: creating the inotify instance in FS-WATCH
 (defmacro %define-libc (lisp-name c-name return-type &rest args)
   "A CFFI binding of the libc function C-NAME on Linux; elsewhere a function
 of the same arguments that signals INOTIFY-ERROR."
+  (declare (ignorable return-type))
   #+linux
   `(cffi:defcfun (,c-name ,lisp-name) ,return-type ,@args)
   #-linux
