@@ -22,3 +22,11 @@ inspected further. Always NIL off Linux."
 (pathlib:register-watch-mechanism :inotify '%make-inotify-journal
                                   :rank +inotify-rank+
                                   :available-p 'inotify-available-p)
+
+;;; R4c-2: :FICLONE, per file (no tree hook: there is no tree-level reflink).
+;;; Registered on every OS; FICLONE-AVAILABLE-P makes it unavailable off Linux
+;;; and off LOCAL-FILESYSTEM, and a probe clone decides on Linux.
+
+(pathlib:register-clone-mechanism :ficlone 'ficlone-file
+                                  :rank +ficlone-rank+
+                                  :available-p 'ficlone-available-p)
